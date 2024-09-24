@@ -5,7 +5,7 @@ public class Main {
         System.out.println("Как тебя зовут?");
 
         Scanner sc = new Scanner(System.in);
-        String name = sc.nextLine();
-        System.out.println("Привет, " + name + "!");
+        String nam = sc.nextLine();
+        System.out.println("Привет, " + nam + "!");
         }
     }
