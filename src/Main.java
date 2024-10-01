@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        System.out.println("Введите 3 числа");
         int a = sc.nextInt();
         int b = sc.nextInt();
         int c = sc.nextInt();
@@ -26,11 +27,12 @@ public class Main {
                 res = res.join(", ", res, "c=" + c);
             }
         }
-        System.out.println(res);
 
         if ((a%5 != 0) && (b%5 != 0) && (c%5 != 0)){
-            System.out.println("нет значений, кратных 5");
+            res = "нет значений, кратных 5";
         }
+
+        System.out.println(res);
 
         int quotient = a/b;
         System.out.println("Результат целочисленного деления a на b: " + quotient);
