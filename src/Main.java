@@ -1,20 +1,33 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
-        List<Integer> numbers = intsInRange(20, 1, 16);
-        System.out.println(numbers);
-    }
+        int length = 20;
+        int min = 1;
+        int max = 15;
 
-    public static List<Integer> intsInRange(int size, int lowerBound, int upperBound) {
+        int[] randomNumbers = new int[length];
+
         Random random = new Random();
-        List<Integer> result = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            result.add(random.nextInt(upperBound - lowerBound) + lowerBound);
+
+        for (int i = 0; i < length; i++) {
+            randomNumbers[i] = random.nextInt(max - min + 1) + min;
         }
-        return result;
+
+        System.out.println(Arrays.toString(randomNumbers));
+
+        Map<Integer, Integer> countMap = new HashMap<>();
+        for (int number : randomNumbers) {
+            countMap.put(number, countMap.getOrDefault(number, 0) + 1);
+        }
+
+        for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
+            if (entry.getValue() > 1) {
+                System.out.println("Число '" + entry.getKey() + "' встречается " + entry.getValue() + " раза");
+            }
+        }
     }
 }
