@@ -18,6 +18,16 @@ public class Main {
 
         String dateNewYear = dateNewYear(correctDate);
         System.out.println("Дата после сдвига на начало года: " + dateNewYear);
+
+        String newDate10 = increaseDat10(correctDate);
+        System.out.println("Дата после увеличения на 10 рабочих дней: " + newDate10);
+
+        System.out.println("Введите вторую дату в формате dd.MM.yyyy:");
+        String secondDate = sc.nextLine();
+        Date correctSecondDate = correctedSecondDate(secondDate);
+
+        int workdaysCount = countingDays(correctDate, correctSecondDate);
+        System.out.println("Количество рабочих дней между введенными датами: " + workdaysCount);
     }
 
     public static Date correctedDate(String dateString) throws ParseException {
@@ -49,5 +59,57 @@ public class Main {
         Date newDate = calendar.getTime();
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy");
         return outputFormat.format(newDate);
+    }
+
+    public static String increaseDat10(Date correctDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(correctDate);
+
+        int addedDays = 0;
+
+        while (addedDays < 10) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
+                    calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                addedDays++;
+            }
+        }
+
+        Date newDate = calendar.getTime();
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return outputFormat.format(newDate);
+    }
+
+    public static Date correctedSecondDate(String secondDate) throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return inputFormat.parse(secondDate);
+    }
+
+    public static int countingDays(Date correctDate, Date correctSecondDate) {
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(correctDate);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(correctSecondDate);
+
+        if (startCalendar.after(endCalendar)) {
+            Calendar temp = startCalendar;
+            startCalendar = endCalendar;
+            endCalendar = temp;
+        }
+
+        int workdaysCount = 0;
+
+        endCalendar.add(Calendar.DAY_OF_MONTH, -1);
+
+        while (!startCalendar.after(endCalendar)) {
+            if (startCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
+                    startCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                workdaysCount++;
+            }
+            startCalendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return workdaysCount;
     }
 }
